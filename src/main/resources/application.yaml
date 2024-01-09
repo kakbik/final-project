@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: soccer_teams
+    password: soccer_teams
+    url: jdbc:mysql://localhost:3306/soccer_teams
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+    
+  sql:
+    init:
+      mode: never
