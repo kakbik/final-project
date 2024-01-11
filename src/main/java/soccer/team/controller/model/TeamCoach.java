@@ -20,4 +20,11 @@ public class TeamCoach {
 		coachNationality= coach.getCoachNationality();
 			
 	}
+
+	public void delete() {
+		this.coachFullName = null;
+		this.coachNationality = null;
+		
+	}
+
 }

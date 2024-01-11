@@ -10,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import soccer.team.controller.model.TeamCoach;
 import soccer.team.controller.model.TeamData;
 import soccer.team.controller.model.TeamLeague;
 import soccer.team.controller.model.TeamPlayer;
+import soccer.team.dao.CoachDao;
 import soccer.team.dao.LeagueDao;
 import soccer.team.dao.PlayerDao;
 import soccer.team.dao.TeamDao;
+import soccer.team.entity.Coach;
 import soccer.team.entity.League;
 import soccer.team.entity.Player;
 import soccer.team.entity.Team;
@@ -31,6 +34,9 @@ public class SoccerTeamService {
 
 	@Autowired
 	private LeagueDao leagueDao;
+	
+	@Autowired
+	private CoachDao coachDao;
 
 	@Transactional(readOnly = false)
 	public TeamPlayer savePlayer(Long teamId, TeamPlayer teamPlayer) {
@@ -68,6 +74,11 @@ public class SoccerTeamService {
 			throw new IllegalArgumentException("Player's team ID doesn't match the team ID");
 		}
 
+	}
+	private void copyCoachFields(Coach coach, TeamCoach teamCoach) {
+		coach.setCoachFullName(teamCoach.getCoachFullName());
+		coach.setCoachNationality(teamCoach.getCoachNationality());
+		coach.setCoachId(teamCoach.getCoachId());
 	}
 
 	private void copyPlayerFields(Player player, TeamPlayer teamPlayer) {
@@ -175,6 +186,8 @@ public class SoccerTeamService {
 			TeamData td = new TeamData(team);
 			td.getLeagues().clear();
 			td.getPlayers().clear();
+			td.getCoach().delete();
+			
 			result.add(td);
 			
 		}
@@ -192,4 +205,45 @@ public class SoccerTeamService {
 		Team team =findTeamById(teamId);
 		teamDao.delete(team);
 	}
+
+	@Transactional(readOnly = false)
+	public TeamCoach saveCoach(Long teamId, TeamCoach teamCoach) {
+
+		Team team = findTeamById(teamId);
+		Long coachId = teamCoach.getCoachId();
+		Coach coach = findOrCreateCoach(teamId, coachId);
+
+		copyCoachFields(coach, teamCoach);
+
+		coach.setTeam(team);
+		//team.getCoach().add(coach);
+		team.setCoach(coach);
+		return new TeamCoach(coachDao.save(coach));
+
+	}
+
+	private Coach findOrCreateCoach(Long teamId, Long coachId) {
+ 		if (Objects.isNull(coachId)) {
+			return new Coach();
+		} else {
+
+			return findCoachById(teamId, coachId);
+		}
+	}
+
+	private Coach findCoachById(Long teamId, Long coachId) {
+
+		Coach coach = coachDao.findById(coachId)
+				.orElseThrow(() -> new NoSuchElementException("Coach with ID=" + coachId + " was not found."));
+
+		if (coach.getTeam().getTeamId() == teamId) {
+			return coach;
+		} else {
+
+			throw new IllegalArgumentException("Coach's team ID doesn't match the team ID");
+		}
+
+	}
+
+	
 }

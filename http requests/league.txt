@@ -1,0 +1,5 @@
+{
+  "leagueName": "English Premier League",
+  "leagueType": "English",
+  "leagueNumOfTeams": 20
+}

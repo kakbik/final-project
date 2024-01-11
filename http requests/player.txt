@@ -1,0 +1,5 @@
+{
+  "playerFullName": "Mo Salah",
+  "playerNationality": "Egyptian",
+  "playerPositionOfPlay": "Attack"
+}

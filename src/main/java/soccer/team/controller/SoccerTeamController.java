@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import soccer.team.controller.model.TeamCoach;
 import soccer.team.controller.model.TeamData;
 import soccer.team.controller.model.TeamLeague;
 import soccer.team.controller.model.TeamPlayer;
 import soccer.team.service.SoccerTeamService;
 
 @RestController
-@RequestMapping("/pet_store")
+@RequestMapping("/soccer_team")
 @Slf4j
 public class SoccerTeamController {
 
@@ -49,9 +50,18 @@ public class SoccerTeamController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public TeamPlayer insertPlayer (@PathVariable Long teamId, @RequestBody TeamPlayer teamPlayer) {
 		
-		log.info("Creating employee {} for pet store with ID={}", teamPlayer, teamId);
+		log.info("Creating employee {} for soccer team with ID={}", teamPlayer, teamId);
 		
 		return teamService.savePlayer(teamId, teamPlayer);
+		
+	}
+	@PostMapping("/{teamId}/coach")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public TeamCoach insertCoach (@PathVariable Long teamId, @RequestBody TeamCoach teamCoach) {
+		
+		log.info("Creating employee {} for soccer team with ID={}", teamCoach, teamId);
+		
+		return teamService.saveCoach(teamId, teamCoach);
 		
 	}
 	
@@ -59,19 +69,19 @@ public class SoccerTeamController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public TeamLeague insertLeague (@PathVariable Long teamId, @RequestBody TeamLeague teamLeague) {
 		
-		log.info("Creating employee {} for pet store with ID={}", teamLeague, teamId);
+		log.info("Creating league {} for soccer team with ID={}", teamLeague, teamId);
 		
 		return teamService.saveLeague(teamId, teamLeague);
 		
 	}
 	@GetMapping
-	public List<TeamData> retrievePetStores() {
+	public List<TeamData> retrieveTeam() {
 		
-		log.info("Retrieving all pet stores");
+		log.info("Retrieving all soccer teams");
 		
 		return teamService.retrieveAllTeams();
 	}
-	@GetMapping("/{petStoreId}")
+	@GetMapping("/{teamId}")
 	public TeamData retrieveTeamById(@PathVariable Long teamId) {
 		
 		log.info("Retrieving soccer team with ID={}",teamId);
@@ -79,8 +89,8 @@ public class SoccerTeamController {
 		return teamService.retrieveTeamById(teamId);
 	}
 	@DeleteMapping ("/{teamId}")
-	public Map<String, String> deletePetStoreById(@PathVariable Long teamId) {
-		log.info("Deleting pet store with ID={}", teamId);
+	public Map<String, String> deleteTeamById(@PathVariable Long teamId) {
+		log.info("Deleting soccer team with ID={}", teamId);
 		teamService.deleteTeamById(teamId);
 		return Map.of("message", "Deletion of soccer team with ID="+teamId+ " was successful");
 	}

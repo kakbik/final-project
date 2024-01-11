@@ -1,5 +1,10 @@
-INSERT INTO league (league_name) VALUES ('English Premier League');
-INSERT INTO league (league_name) VALUES ('La Liga');
-INSERT INTO league (league_name) VALUES ('Serie A');
-INSERT INTO league (league_name) VALUES ('Bundesliga');
-INSERT INTO league (league_name) VALUES ('Ligue 1');
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Barcelona',0,0,0,0,0,15);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Real Madrid',0,0,0,0,0,20);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Liverpool',0,0,0,0,0,13);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Man City',0,0,0,0,0,16);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Bayern Munich',0,0,0,0,0,19);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Bayern Leverkusen',0,0,0,0,0,12);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Juventus',0,0,0,0,0,18);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Napoli',0,0,0,0,0,13);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('PSG',0,0,0,0,0,15);
+INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Olympique Lyon',0,0,0,0,0,14);
