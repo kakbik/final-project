@@ -8,3 +8,9 @@ INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,tea
 INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Napoli',0,0,0,0,0,13);
 INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('PSG',0,0,0,0,0,15);
 INSERT INTO team (team_name,games_played,team_num_of_wins,team_num_of_losses,team_num_of_draws,team_num_of_points,team_num_of_players) VALUES ('Olympique Lyon',0,0,0,0,0,14);
+INSERT INTO league(league_name,league_num_of_teams,league_type)VALUES('English Premier League',20,'English League');
+INSERT INTO league(league_name,league_num_of_teams,league_type)VALUES('La Liga',20,'Spanish League');
+INSERT INTO league(league_name,league_num_of_teams,league_type)VALUES('Serie A',20,'Italian League');
+INSERT INTO league(league_name,league_num_of_teams,league_type)VALUES('Bundesliga',18,'German League');
+INSERT INTO league(league_name,league_num_of_teams,league_type)VALUES('Ligue 1',18,'French League');
+INSERT INTO league(league_name,league_num_of_teams,league_type)VALUES('Champions League',32,'European');

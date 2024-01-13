@@ -1,0 +1,9 @@
+{
+  "teamName": "Aston Villa",
+  "gamesPlayed": "0",
+  "teamNumOfPlayers": "0",
+  "teamNumOfWins": "0",
+  "teamNumOfLosses": "0",
+  "teamNumOfDraws": "0",
+  "teamNumOfPoints": "0"
+}

@@ -4,9 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +45,7 @@ public class SoccerTeamService {
 
 		Team team = findTeamById(teamId);
 		Long playerId = teamPlayer.getPlayerId();
-		Player player = findOrCreatePlayer(teamId, playerId);
+		Player player = findOrCreatePlayer(teamId, playerId,teamPlayer.getPlayerFullName());
 
 		copyPlayerFields(player, teamPlayer);
 
@@ -53,8 +55,13 @@ public class SoccerTeamService {
 
 	}
 
-	private Player findOrCreatePlayer(Long teamId, Long playerId) {
+	private Player findOrCreatePlayer(Long teamId, Long playerId, String playerFullName) {
  		if (Objects.isNull(playerId)) {
+ 			Optional<Player> opPlayer = playerDao.findByPlayerFullName(playerFullName);
+ 			
+ 			if (opPlayer.isPresent()) {
+				throw new DuplicateKeyException("player with full name " + playerFullName + " already exists.");
+ 			}
 			return new Player();
 		} else {
 
@@ -132,7 +139,7 @@ public class SoccerTeamService {
 
 		Team team = findTeamById(teamId);
 		Long leagueId = teamLeague.getLeagueId();
-		League league = findOrCreateLeague(leagueId, leagueId);
+		League league = findOrCreateLeague(leagueId, leagueId,teamLeague.getLeagueName());
 
 		copyLeagueFields(league, teamLeague);
 
@@ -143,9 +150,10 @@ public class SoccerTeamService {
 
 	}
 
-	private League findOrCreateLeague(Long teamId, Long leagueId) {
+	private League findOrCreateLeague(Long teamId, Long leagueId, String leagueName) {
 		
 		if (Objects.isNull(leagueId)) {
+			
 			return new League();
 		} else {
 
@@ -178,6 +186,14 @@ public class SoccerTeamService {
 		league.setLeagueNumOfTeams(teamLeague.getLeagueNumOfTeams());
 	}
 
+	@Transactional (readOnly = true)
+	public List<TeamLeague> retrieveAllLeagues() {
+		return leagueDao.findAll()
+				.stream()
+				.map(TeamLeague::new)
+				.toList();
+				//@formatter:on
+	}
 	@Transactional
 	public List<TeamData> retrieveAllTeams() {
 		List<Team> teams = teamDao.findAll();
@@ -211,7 +227,7 @@ public class SoccerTeamService {
 
 		Team team = findTeamById(teamId);
 		Long coachId = teamCoach.getCoachId();
-		Coach coach = findOrCreateCoach(teamId, coachId);
+		Coach coach = findOrCreateCoach(teamId, coachId,teamCoach.getCoachFullName());
 
 		copyCoachFields(coach, teamCoach);
 
@@ -222,14 +238,20 @@ public class SoccerTeamService {
 
 	}
 
-	private Coach findOrCreateCoach(Long teamId, Long coachId) {
+	private Coach findOrCreateCoach(Long teamId, Long coachId,String coachFullName) {
  		if (Objects.isNull(coachId)) {
+ 			Optional<Coach> opCoach = coachDao.findByCoachFullName(coachFullName);
+ 			
+ 			if (opCoach.isPresent()) {
+				throw new DuplicateKeyException("coach with full name " + coachFullName + " already exists.");
+ 			}
 			return new Coach();
 		} else {
 
 			return findCoachById(teamId, coachId);
 		}
 	}
+	
 
 	private Coach findCoachById(Long teamId, Long coachId) {
 
@@ -243,6 +265,11 @@ public class SoccerTeamService {
 			throw new IllegalArgumentException("Coach's team ID doesn't match the team ID");
 		}
 
+	}
+
+	public TeamLeague saveExistingLeague(Long teamId, Long leagueId, TeamLeague teamLeague) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

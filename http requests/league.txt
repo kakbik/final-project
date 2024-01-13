@@ -1,5 +1,5 @@
 {
-  "leagueName": "English Premier League",
+  "leagueName": "EPL",
   "leagueType": "English",
   "leagueNumOfTeams": 20
 }
